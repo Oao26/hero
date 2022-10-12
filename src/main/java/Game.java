@@ -31,41 +31,28 @@ public class Game {
     }
     private void draw() throws IOException {
         screen.clear();
-        screen.setCharacter(x, y, TextCharacter.fromCharacter('X')
-                [0]);
+        hero.draw(screen);
         screen.refresh();
         KeyStroke key = screen.readInput();
-        processKey(key);
-        screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
-        screen.refresh();
+        if (key.getKeyType() == KeyType.ArrowUp)
+            moveHero(hero.moveUp());
+        if (key.getKeyType() == KeyType.ArrowDown)
+            moveHero(hero.moveDown());
+        if (key.getKeyType() == KeyType.ArrowRight)
+            moveHero(hero.moveRight());
+        if (key.getKeyType() == KeyType.ArrowLeft)
+            moveHero(hero.moveLeft());
     }
 
 
     public void run() throws IOException {
-        System.out.println("run was called");
         while(true) {
-            this.draw();
+            draw();
         }
     }
 
-    private int x=10;
-    private int y=10;
-
-    private void processKey(KeyStroke key) {
-        if (key.getKeyType() == KeyType.ArrowUp || (key.getKeyType() == KeyType.Character && key.getCharacter() == 'w')){
-            this.y-=1;
-        }
-        if (key.getKeyType() == KeyType.ArrowDown || (key.getKeyType() == KeyType.Character && key.getCharacter() == 's')){
-            this.y+=1;
-        }
-        if (key.getKeyType() == KeyType.ArrowLeft || (key.getKeyType() == KeyType.Character && key.getCharacter() == 'a')){
-            this.x-=1;
-        }
-        if (key.getKeyType() == KeyType.ArrowRight || (key.getKeyType() == KeyType.Character && key.getCharacter() == 'd')){
-            this.x+=1;
-        }
-
+    private void moveHero(Position position) {
+        hero.setPosition(position);
     }
-
-
+    private Hero hero=new Hero(10,10);
 }
