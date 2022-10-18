@@ -1,4 +1,7 @@
+import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -16,7 +19,9 @@ public class Hero {
     }
 
     public void draw(TextGraphics graphics) throws IOException {
-        graphics.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('X')[0]);
+        graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
+        graphics.enableModifiers(SGR.BOLD);
+        graphics.putString(new TerminalPosition(position.getX(),position.getY()), "X");
     }
 
     public Position moveUp() {
