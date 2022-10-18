@@ -1,4 +1,5 @@
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -14,10 +15,8 @@ public class Hero {
         position= new Position(x,y);
     }
 
-    public void draw(Screen screen) throws IOException {
-        screen.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('X')[0]);
-        screen.refresh();
-
+    public void draw(TextGraphics graphics) throws IOException {
+        graphics.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('X')[0]);
     }
 
     public Position moveUp() {

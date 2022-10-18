@@ -10,7 +10,6 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 
 public class Game {
-    public Screen screen;
     public Game() throws IOException {
         try {
             Terminal terminal = new DefaultTerminalFactory().createTerminal();
@@ -31,28 +30,22 @@ public class Game {
     }
     private void draw() throws IOException {
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen.newTextGraphics());
         screen.refresh();
-        KeyStroke key = screen.readInput();
-        if (key.getKeyType() == KeyType.ArrowUp)
-            moveHero(hero.moveUp());
-        if (key.getKeyType() == KeyType.ArrowDown)
-            moveHero(hero.moveDown());
-        if (key.getKeyType() == KeyType.ArrowRight)
-            moveHero(hero.moveRight());
-        if (key.getKeyType() == KeyType.ArrowLeft)
-            moveHero(hero.moveLeft());
     }
 
 
     public void run() throws IOException {
         while(true) {
+            processKey(screen.readInput());
             draw();
         }
     }
 
-    private void moveHero(Position position) {
-        hero.setPosition(position);
+    private void processKey(KeyStroke key) {
+        arena.processKey(key);
     }
-    private Hero hero=new Hero(10,10);
+
+    private Arena arena;
+    private Screen screen;
 }
